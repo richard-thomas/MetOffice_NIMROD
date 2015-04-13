@@ -1,13 +1,13 @@
 # MetOffice_NIMROD
 Python module to extract data from UK Met Office Rain Radar NIMROD image files.
 
-Parse NIMROD format image files, display header data and allow extraction of
+Features: parses NIMROD format image files, displays header data and allows extraction of
 raster image to an ESRI ASCII (.asc) format file. A bounding box may be
 specified to clip the image to the area of interest. Can be imported as a
 Python module or run directly as a command line script.
 
-This module is developed from a Python script written for a hydrological
-modelling assignment as part of my [GIS MSc](http://richard-thomas.github.io/GIS_MSc/).
+(This module is developed from a basic Python script written for a hydrological
+modelling assignment of my [GIS MSc](http://richard-thomas.github.io/GIS_MSc/)).
 
 Command line usage:
 ```
@@ -50,13 +50,14 @@ Example Python module usage:
 
 Notes:
   1. Valid for v1.7 and v2.6-4 of NIMROD file specification
-  2. Tested on UK composite 1km and 5km data
-  3. Assumes image origin is top left (i.e. that header[24] = 0)
+  2. Assumes image origin is top left (i.e. that header[24] = 0)
+  3. Tested on UK composite 1km and 5km data, under Linux and Windows XP
   4. Further details of NIMROD data and software at the [NERC BADC]
   (http://badc.nerc.ac.uk/browse/badc/ukmo-nimrod/) website:
          
-
+----
 Copyright (c) 2015 Richard Thomas
+
 (`Nimrod.__init__()` method based on read_nimrod.py by Charles Kilburn Aug 2008)
 
 This program is free software: you can redistribute it and/or modify
