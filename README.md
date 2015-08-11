@@ -40,7 +40,7 @@ Example Python module usage:
 ```
     import nimrod
     a = nimrod.Nimrod(open(
-        '200802252000_nimrod_ng_radar_rainrate_composite_1km_merged_UK_zip'))
+        '200802252000_nimrod_ng_radar_rainrate_composite_1km_merged_UK_zip', 'rb'))
     a.query()
     a.extract_asc(open('full_raster.asc', 'w'))
     a.apply_bbox(279906, 285444, 283130, 290440)
