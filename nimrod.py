@@ -8,7 +8,7 @@ specified to clip the image to the area of interest. Can be imported as a
 Python module or run directly as a command line script.
 
 Author: Richard Thomas
-Version: 1.0 (13 April 2015)
+Version: 1.01 (8 August 2015)
 Public Repository: https://github.com/richard-thomas/MetOffice_NIMROD
 
 Command line usage:
@@ -37,7 +37,8 @@ Example command line usage:
 Example Python module usage:
     import nimrod
     a = nimrod.Nimrod(open(
-        '200802252000_nimrod_ng_radar_rainrate_composite_1km_merged_UK_zip'))
+        '200802252000_nimrod_ng_radar_rainrate_composite_1km_merged_UK_zip',
+        'rb'))
     a.query()
     a.extract_asc(open('full_raster.asc', 'w'))
     a.apply_bbox(279906, 285444, 283130, 290440)
@@ -47,7 +48,8 @@ Example Python module usage:
 Notes:
   1. Valid for v1.7 and v2.6-4 of NIMROD file specification
   2. Assumes image origin is top left (i.e. that header[24] = 0)
-  3. Tested on UK composite 1km and 5km data, under Linux and Windows XP
+  3. Tested on UK composite 1km and 5km data, under Linux and Windows XP,
+     using Python 2.7
   4. Further details of NIMROD data and software at the NERC BADC website:
       http://badc.nerc.ac.uk/browse/badc/ukmo-nimrod/   
 
@@ -136,26 +138,26 @@ class Nimrod:
         try:
             # Read first 31 2-byte integers (header fields 1-31)
             gen_ints = array.array("h")
-            gen_ints.read(infile, 31)
+            gen_ints.fromfile(infile, 31)
             gen_ints.byteswap()
             
             # Read next 28 4-byte floats (header fields 32-59)
             gen_reals = array.array("f")
-            gen_reals.read(infile, 28)
+            gen_reals.fromfile(infile, 28)
             gen_reals.byteswap()
             
             # Read next 45 4-byte floats (header fields 60-104)
             spec_reals = array.array("f")
-            spec_reals.read(infile, 45)
+            spec_reals.fromfile(infile, 45)
             spec_reals.byteswap()
             
             # Read next 56 characters (header fields 105-107)
             characters = array.array("c")
-            characters.read(infile, 56)
+            characters.fromfile(infile, 56)
             
             # Read next 51 2-byte integers (header fields 108-)
             spec_ints = array.array("h")
-            spec_ints.read(infile, 51)
+            spec_ints.fromfile(infile, 51)
             spec_ints.byteswap()
         except Exception:
             infile.close()
@@ -201,7 +203,7 @@ class Nimrod:
              
         self.data = array.array("h")
         try:
-            self.data.read(infile, array_size)
+            self.data.fromfile(infile, array_size)
             self.data.byteswap()
         except Exception:
             infile.close()
