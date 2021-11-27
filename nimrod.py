@@ -8,7 +8,7 @@ specified to clip the image to the area of interest. Can be imported as a
 Python module or run directly as a command line script.
 
 Author: Richard Thomas
-Version: 1.01 (8 August 2015)
+Version: 2.00 (27 November 2021)
 Public Repository: https://github.com/richard-thomas/MetOffice_NIMROD
 
 Command line usage:
@@ -48,12 +48,10 @@ Example Python module usage:
 Notes:
   1. Valid for v1.7 and v2.6-4 of NIMROD file specification
   2. Assumes image origin is top left (i.e. that header[24] = 0)
-  3. Tested on UK composite 1km and 5km data, under Linux and Windows XP,
-     using Python 2.7
-  4. Further details of NIMROD data and software at the NERC BADC website:
-      http://badc.nerc.ac.uk/browse/badc/ukmo-nimrod/
+  3. Tested on UK and European composite 1km and 5km data, using Python 3.9
+     in Windows 10
 
-Copyright (c) 2015 Richard Thomas
+Copyright (c) 2021 Richard Thomas
 (Nimrod.__init__() method based on read_nimrod.py by Charles Kilburn Aug 2008)
 
 This program is free software: you can redistribute it and/or modify
@@ -171,7 +169,7 @@ class Nimrod:
         check_record_len(infile, 512, "header end")
 
         # Extract strings and make duplicate entries to give meaningful names
-        chars = characters.tobytes()
+        chars = characters.tobytes().decode()
         self.units = chars[0:8]
         self.data_source = chars[8:32]
         self.title = chars[32:55]
@@ -321,10 +319,8 @@ class Nimrod:
         for i in range(yMinPixelId, yMaxPixelId + 1):
             bbox_data.extend(
                 self.data[
-                    i * self.ncols
-                    + xMinPixelId : i * self.ncols
-                    + xMaxPixelId
-                    + 1
+                    i * self.ncols + xMinPixelId :
+                    i * self.ncols + xMaxPixelId + 1
                 ]
             )
 
